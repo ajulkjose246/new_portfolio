@@ -24,11 +24,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const gridBackground = document.querySelector('.grid-background');
     
     document.addEventListener('mousemove', (e) => {
-        // Update cursor glow position
-        cursorGlow.style.left = e.clientX + 'px';
-        cursorGlow.style.top = e.clientY + 'px';
+        // Update cursor glow position with precise coordinates
+        requestAnimationFrame(() => {
+            cursorGlow.style.left = `${e.pageX}px`;
+            cursorGlow.style.top = `${e.pageY}px`;
+        });
         
-        // Calculate mouse position relative to center
+        // Calculate mouse position relative to center for other effects
         const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
         const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
         
@@ -129,6 +131,83 @@ document.addEventListener('DOMContentLoaded', () => {
                     window.location.href = '#contact';
                     break;
             }
+        });
+    });
+
+    // Add hover effect for cards
+    document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        });
+        
+        card.addEventListener('mouseover', () => {
+            card.style.transform = `scale(1.02) translateY(-5px)`;
+        });
+        
+        card.addEventListener('mouseout', () => {
+            card.style.transform = 'scale(1) translateY(0)';
+        });
+    });
+
+    // Add this to your DOMContentLoaded event listener
+    const cursor = document.querySelector('.custom-cursor');
+    const cursorDot = document.querySelector('.cursor-dot');
+
+    // Update the cursor movement code to be smoother
+    let cursorX = 0;
+    let cursorY = 0;
+    let dotX = 0;
+    let dotY = 0;
+
+    function updateCursor() {
+        const cursor = document.querySelector('.custom-cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+        
+        // Smooth following effect for the outer circle
+        cursorX += (mouseX - cursorX) * 0.1;
+        cursorY += (mouseY - cursorY) * 0.1;
+        
+        // Faster following for the inner dot
+        dotX += (mouseX - dotX) * 0.3;
+        dotY += (mouseY - dotY) * 0.3;
+
+        cursor.style.left = `${cursorX}px`;
+        cursor.style.top = `${cursorY}px`;
+        cursorDot.style.left = `${dotX}px`;
+        cursorDot.style.top = `${dotY}px`;
+
+        requestAnimationFrame(updateCursor);
+    }
+
+    let mouseX = 0;
+    let mouseY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    updateCursor();
+
+    // Add hover effect for clickable elements
+    document.querySelectorAll('a, button, .card').forEach(element => {
+        element.addEventListener('mouseenter', () => {
+            cursor.style.width = '40px';
+            cursor.style.height = '40px';
+            cursor.style.borderWidth = '3px';
+            cursorDot.style.transform = 'translate(-50%, -50%) scale(1.5)';
+        });
+        
+        element.addEventListener('mouseleave', () => {
+            cursor.style.width = '20px';
+            cursor.style.height = '20px';
+            cursor.style.borderWidth = '2px';
+            cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
         });
     });
 });
