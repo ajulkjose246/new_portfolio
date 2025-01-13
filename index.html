@@ -3,93 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajul K Jose - Portfolio</title>
+    <title>Futuristic Portfolio</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Add Font Awesome for social icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <header class="header">
-        <h1>Ajul K Jose</h1>
-        
+    <div class="noise-overlay"></div>
+    <div class="cursor-glow"></div>
+    <div class="grid-background"></div>
+    <div class="click-effects-container"></div>
+    
+    <header>
+        <nav class="cyber-nav">
+            <div class="logo">
+                <div class="logo-glitch-container">
+                    <span class="logo-text">&lt;/&gt;</span>
+                    <span class="logo-glitch">DEV</span>
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="#home" class="nav-item">
+                    <span class="nav-line"></span>
+                    <span class="nav-text">HOME</span>
+                </a>
+                <a href="#projects" class="nav-item">
+                    <span class="nav-line"></span>
+                    <span class="nav-text">PROJECTS</span>
+                </a>
+                <a href="#about" class="nav-item">
+                    <span class="nav-line"></span>
+                    <span class="nav-text">ABOUT</span>
+                </a>
+                <a href="#contact" class="nav-item">
+                    <span class="nav-line"></span>
+                    <span class="nav-text">CONTACT</span>
+                </a>
+            </div>
+        </nav>
     </header>
 
-    <main class="main-content">
-        <div class="side-panel left-panel">
-            <div class="panel-content">
-                <h2>Quick Info</h2>
-                <div class="info-item">
-                    <i class="fas fa-code"></i>
-                    <span>Full Stack Developer</span>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-graduation-cap"></i>
-                    <span>B.Tech CSE Student</span>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Kerala, India</span>
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1 class="cyber-glitch">Hello, I'm <span class="highlight">Your Name</span></h1>
+                <p class="cyber-text">Frontend Developer | UI Designer | Creative Technologist</p>
+                <div class="cta-buttons">
+                    <button class="cyber-button">View Projects</button>
+                    <button class="cyber-button">Contact Me</button>
                 </div>
             </div>
-        </div>
-
-        <div class="terminal">
-            <div class="terminal-header">
-                <div class="controls">
-                    <span class="control close"></span>
-                    <span class="control minimize"></span>
-                    <span class="control maximize"></span>
-                </div>
-                <div class="title">portfolio.exe</div>
-            </div>
-            <div class="terminal-body" id="terminal-body">
-                <div class="line">
-                    <span class="prompt">visitor@portfolio:~$</span>
-                    <span class="command">whoami</span>
-                </div>
-                <div class="output">
-                    John Doe - Full Stack Developer
-                </div>
-                <div class="line">
-                    <span class="prompt">visitor@portfolio:~$</span>
-                    <span class="command-wrapper">
-                        <span id="current-command" class="command"></span>
-                        <span class="cursor">█</span>
-                    </span>
-                </div>
-            </div>
-        </div>
-
-        <div class="side-panel right-panel">
-            <div class="panel-content">
-                <h2>Latest Projects</h2>
-                <div class="project-item">
-                    <i class="fas fa-project-diagram"></i>
-                    <span>Attendance Management</span>
-                </div>
-                <div class="project-item">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span>E-Commerce Website</span>
-                </div>
-                <div class="project-item">
-                    <i class="fas fa-users"></i>
-                    <span>Student Management</span>
-                </div>
-            </div>
-        </div>
+        </section>
     </main>
 
-    <footer class="footer">
-        <div class="social-links">
-            <a href="https://github.com/ajulkjose" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="https://linkedin.com/in/ajul-k-jose" target="_blank"><i class="fab fa-linkedin"></i></a>
-            <a href="https://instagram.com/ajul_k_jose" target="_blank"><i class="fab fa-instagram"></i></a>
+    <div class="custom-context-menu">
+        <div class="context-item" data-action="copy">
+            <span class="context-icon">⎘</span>
+            <span class="context-text">Copy</span>
         </div>
-        <div class="copyright">
-            © 2024 Ajul K Jose. All rights reserved.
+        <div class="context-item" data-action="share">
+            <span class="context-icon">⤤</span>
+            <span class="context-text">Share</span>
         </div>
-    </footer>
+        <div class="context-item" data-action="view">
+            <span class="context-icon">⎙</span>
+            <span class="context-text">View Source</span>
+        </div>
+        <div class="context-separator"></div>
+        <div class="context-item" data-action="contact">
+            <span class="context-icon">✉</span>
+            <span class="context-text">Contact</span>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
-</html> 
+</html>
