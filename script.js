@@ -716,6 +716,127 @@ document.addEventListener('DOMContentLoaded', () => {
         popupOverlay.addEventListener('click', closePopup);
         popup.addEventListener('click', (e) => e.stopPropagation());
     });
+
+    const terminal = document.querySelector('.terminal-container');
+    const terminalBtn = document.querySelector('.terminal-btn');
+    const terminalInput = document.querySelector('.terminal-input');
+    const terminalOutput = document.querySelector('.terminal-output');
+    const closeBtn = document.querySelector('.terminal-close');
+    const minimizeBtn = document.querySelector('.terminal-minimize');
+    const maximizeBtn = document.querySelector('.terminal-maximize');
+
+    // Terminal toggle
+    terminalBtn.addEventListener('click', () => {
+        terminal.classList.toggle('active');
+        if (terminal.classList.contains('active')) {
+            terminalInput.focus();
+        }
+    });
+
+    // Close terminal
+    closeBtn.addEventListener('click', () => {
+        terminal.classList.remove('active');
+    });
+
+    // Minimize terminal
+    minimizeBtn.addEventListener('click', () => {
+        terminal.style.height = '40px';
+        terminal.style.overflow = 'hidden';
+    });
+
+    // Maximize terminal
+    maximizeBtn.addEventListener('click', () => {
+        terminal.style.height = '400px';
+        terminal.style.overflow = 'hidden auto';
+    });
+
+    // Make terminal draggable
+    let isDragging = false;
+    let currentX;
+    let currentY;
+    let initialX;
+    let initialY;
+
+    const header = document.querySelector('.terminal-header');
+
+    header.addEventListener('mousedown', dragStart);
+    document.addEventListener('mousemove', drag);
+    document.addEventListener('mouseup', dragEnd);
+
+    function dragStart(e) {
+        initialX = e.clientX - terminal.offsetLeft;
+        initialY = e.clientY - terminal.offsetTop;
+        isDragging = true;
+    }
+
+    function drag(e) {
+        if (isDragging) {
+            e.preventDefault();
+            currentX = e.clientX - initialX;
+            currentY = e.clientY - initialY;
+            terminal.style.left = currentX + 'px';
+            terminal.style.top = currentY + 'px';
+            terminal.style.right = 'auto';
+            terminal.style.bottom = 'auto';
+        }
+    }
+
+    function dragEnd() {
+        isDragging = false;
+    }
+
+    // Handle terminal commands
+    terminalInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            const command = terminalInput.value.trim();
+            const output = processCommand(command);
+            
+            // Add command to output
+            terminalOutput.innerHTML += `
+                <div class="terminal-line">
+                    <span class="terminal-prompt">visitor@portfolio:~$</span>
+                    ${command}
+                </div>
+                <div class="terminal-line">${output}</div>
+            `;
+            
+            // Clear input and scroll to bottom
+            terminalInput.value = '';
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+        }
+    });
+
+    function processCommand(command) {
+        switch(command.toLowerCase()) {
+            case 'help':
+                return `
+                    Available commands:<br>
+                    - help: Show this help message<br>
+                    - clear: Clear the terminal<br>
+                    - about: About me<br>
+                    - contact: Contact information<br>
+                    - projects: List my projects<br>
+                    - skills: List my skills<br>
+                    - github: Open my GitHub profile
+                `;
+            case 'clear':
+                terminalOutput.innerHTML = '';
+                return '';
+            case 'about':
+                return 'Hi! I\'m Ajul K Jose, a Full Stack Developer passionate about creating innovative web solutions.';
+            case 'contact':
+                return 'Email: mail.ajulkjose@gmail.com<br>GitHub: @ajulkjose246';
+            case 'projects':
+                return 'Loading projects...<br>Use the Projects card to view my complete portfolio.';
+            case 'skills':
+                return 'JavaScript, Python, PHP, Flutter, React, Node.js, and more...<br>Use the Skills card to view all my skills.';
+            case 'github':
+                window.open('https://github.com/ajulkjose246', '_blank');
+                return 'Opening GitHub profile...';
+            default:
+                return `Command not found: ${command}. Type 'help' for available commands.`;
+        }
+    }
 });
 
 function scrollToSection(sectionId) {

@@ -1079,3 +1079,165 @@ html {
 .card:hover::before {
     opacity: 0.1;
 }
+
+/* Terminal styles */
+.terminal-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    padding: 10px 20px;
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.terminal-icon {
+    display: inline-block;
+    margin-right: 8px;
+    animation: blink 1s infinite;
+}
+
+.terminal-container {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 600px;
+    height: 400px;
+    background: rgba(0, 0, 0, 0.9);
+    border: 1px solid var(--neon-blue);
+    border-radius: 8px;
+    z-index: 1000;
+    display: none;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
+    resize: both;
+    min-width: 400px;
+    min-height: 300px;
+}
+
+.terminal-container.active {
+    display: flex;
+    flex-direction: column;
+    animation: slideUp 0.3s ease-out;
+}
+
+.terminal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background: rgba(0, 243, 255, 0.1);
+    border-bottom: 1px solid var(--neon-blue);
+}
+
+.terminal-title {
+    color: var(--neon-blue);
+    font-size: 14px;
+}
+
+.terminal-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.terminal-controls span {
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.terminal-minimize { background: #ffbd2e; }
+.terminal-maximize { background: #28c940; }
+.terminal-close { background: #ff5f56; }
+
+.terminal-controls span:hover {
+    filter: brightness(1.2);
+}
+
+.terminal-content {
+    flex: 1;
+    padding: 12px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    overflow-y: auto;
+    color: #fff;
+    line-height: 1.4;
+    background-color: rgba(0, 0, 0, 0.95);
+}
+
+.terminal-output {
+    margin-bottom: 12px;
+}
+
+.terminal-input-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.terminal-prompt {
+    color: var(--neon-blue);
+    font-family: 'Courier New', monospace;
+    margin-right: 8px;
+}
+
+.terminal-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    outline: none;
+    caret-color: var(--neon-blue);
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Make terminal draggable area */
+.terminal-header {
+    cursor: move;
+    user-select: none;
+}
+
+/* Add styles for command outputs */
+.terminal-output .terminal-line {
+    opacity: 0.9;
+}
+
+.terminal-output .command-success {
+    color: #28c940;
+}
+
+.terminal-output .command-error {
+    color: #ff5f56;
+}
+
+/* Add a subtle text shadow for better readability */
+.terminal-content, 
+.terminal-line, 
+.terminal-prompt, 
+.terminal-input {
+    text-shadow: 0 0 2px rgba(0, 243, 255, 0.3);
+}
