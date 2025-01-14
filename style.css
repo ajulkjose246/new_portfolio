@@ -985,3 +985,27 @@ html {
         grid-template-columns: 1fr;
     }
 }
+
+.download-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(45deg, #00f3ff22, #00f3ff11);
+    border: 1px solid #00f3ff;
+}
+
+.download-btn:hover {
+    background: linear-gradient(45deg, #00f3ff44, #00f3ff33);
+}
+
+.download-icon {
+    font-size: 1.2em;
+    filter: hue-rotate(180deg);
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}

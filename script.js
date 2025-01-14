@@ -670,7 +670,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 <a href="https://www.instagram.com/_ajulkjose_/" target="_blank" class="contact-item">
                     <div class="contact-icon">
-                        <img src="assets/icons/instagram.svg" alt="Instagram" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjMDBmM2ZmIiBkPSJNMTIgMEM4LjczIDAgOC4zMy4wMSA3LjA1LjA3IDUuNzguMTMgNC45LjMzIDQuMTUuNjNjLS43OC4zLTEuNDQuNy0yLjEgMS4zNy0uNjcuNjUtMS4wNyAxLjMyLTEuMzcgMi4xLS4zLjc1LS41IDEuNjMtLjU2IDIuOUMuMDEgOC4zMyAwIDguNzMgMCAxMnMuMDEgMy42Ny4wNyA0Ljk1Yy4wNiAxLjI3LjI2IDIuMTUuNTYgMi45LjMuNzguNyAxLjQ0IDEuMzcgMi4xLjY2LjY3IDEuMzIgMS4wNyAyLjEgMS4zNy43NS4zIDEuNjMuNSAyLjkuNTYgMS4yOC4wNiAxLjY4LjA3IDQuOTUuMDdzMy42Ny0uMDEgNC45NS0uMDdjMS4yNy0uMDYgMi4xNS0uMjYgMi45LS41Ni43OC0uMyAxLjQ0LS43IDIuMS0xLjM3LjY3LS42NiAxLjA3LTEuMzIgMS4zNy0yLjEuMy0uNzUuNS0xLjYzLjU2LTIuOS4wNi0xLjI4LjA3LTEuNjguMDctNC45NXMtLjAxLTMuNjctLjA3LTQuOTVjLS4wNi0xLjI3LS4yNi0yLjE1LS41Ni0yLjktLjMtLjc4LS43LTEuNDQtMS4zNy0yLjEtLjY2LS42Ny0xLjMyLTEuMDctMi4xLTEuMzctLjc1LS4zLTEuNjMtLjUtMi45LS41NkMxNS42Ny4wMSAxNS4yNyAwIDEyIDB6bTAgMi4xNmMzLjIgMCAzLjU4LjAxIDQuODUuMDcgMS4xNy4wNSAxLjgxLjI1IDIuMjMuNDIuNTYuMjIuOTYuNDggMS4zOC45LjQyLjQyLjY4LjgyLjkgMS4zOC4xNy40Mi4zNyAxLjA2LjQyIDIuMjMuMDYgMS4yNy4wNyAxLjY1LjA3IDQuODVzLS4wMSAzLjU4LS4wNyA0Ljg1Yy0uMDUgMS4xNy0uMjUgMS44MS0uNDIgMi4yMy0uMjIuNTYtLjQ4Ljk2LS45IDEuMzgtLjQyLjQyLS44Mi42OC0xLjM4LjktLjQyLjE3LTEuMDYuMzctMi4yMy40Mi0xLjI3LjA2LTEuNjUuMDctNC44NS4wN3MtMy41OC0uMDEtNC44NS0uMDdjLTEuMTctLjA1LTEuODEtLjI1LTIuMjMtLjQyLS41Ni0uMjItLjk2LS40OC0xLjM4LS45LS40Mi0uNDItLjY4LS44Mi0uOS0xLjM4LS4xNy0uNDItLjM3LTEuMDYtLjQyLTIuMjMtLjA2LTEuMjctLjA3LTEuNjUtLjA3LTQuODVzLjAxLTMuNTguMDctNC44NWMuMDUtMS4xNy4yNS0xLjgxLjQyLTIuMjMuMjItLjU2LjQ4LS45Ni45LTEuMzguNDItLjQyLjgyLS42OCAxLjM4LS45LjQyLS4xNyAxLjA2LS4zNyAyLjIzLS40MiAxLjI3LS4wNiAxLjY1LS4wNyA0Ljg1LS4wN3oiLz48cGF0aCBmaWxsPSIjMDBmM2ZmIiBkPSJNMTIgNS44M2MtMy40IDAtNi4xNyAyLjc3LTYuMTcgNi4xN3MyLjc3IDYuMTcgNi4xNyA2LjE3IDYuMTctMi43NyA2LjE3LTYuMTctMi43Ny02LjE3LTYuMTctNi4xN3ptMCAxMC4xN2MtMi4yMSAwLTQtMS43OS00LTRzMS43OS00IDQtNCA0IDEuNzkgNCA0LTEuNzkgNC00IDR6Ii8+PC9zdmc+'" />
+                        <img src="assets/icons/instagram.svg" alt="Instagram" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjMDBmM2ZmIiBkPSJNMTIgMEM4LjczIDAgOC4zMy4wMSA3LjA1LjA3IDUuNzguMTMgNC45LjMzIDQuMTUuNjNjLS43OC4zLTEuNDQuNy0yLjEgMS4zNy0uNjcuNjUtMS4wNyAxLjMyLTEuMzcgMi4xLS4zLjc1LS41IDEuNjMtLjU2IDIuOUMuMDEgOC4zMyAwIDguNzMgMCAxMnMuMDEgMy42Ny4wNyA0Ljk1Yy4wNiAxLjI3LjI2IDIuMTUuNTYgMi45LjMuNzguNyAxLjQ0IDEuMzcgMi4xLjY2LjY3IDEuMzIgMS4wNyAyLjEgMS4zNy43NS4zIDEuNjMuNSAyLjkuNTYgMS4yOC4wNiAxLjY4LjA3IDQuOTUuMDdzMy42Ny0uMDEgNC45NS0uMDdjMS4yNy0uMDYgMi4xNS0uMjYgMi45LS41Ni43OC0uMyAxLjQ0LS43IDIuMS0xLjM3LjY3LS42NiAxLjA3LTEuMzIgMS4zNy0yLjEuMy0uNzUuNS0xLjYzLjU2LTIuOS4wNi0xLjI4LjA3LTEuNjguMDctNC45NXMtLjAxLTMuNjctLjA3LTQuOTVjLS4wNi0xLjI3LS4yNi0yLjE1LS41Ni0yLjktLjMtLjc4LS43LTEuNDQtMS4zNy0yLjEtLjY2LS42Ny0xLjMyLTEuMDctMi4xLTEuMzctLjc1LS4zLTEuNjMtLjUtMi45LS41NkMxNS42Ny4wMSAxNS4yNyAwIDEyIDB6bTAgMi4xNmMzLjIgMCAzLjU4LjAxIDQuODUuMDcgMS4xNy4wNSAxLjgxLjI1IDIuMjMuNDIuNTYuMjIuOTYuNDggMS4zOC45LjQyLjQyLjY4LjgyLjkgMS4zOC4xNy40Mi4zNyAxLjA2LjQyIDIuMjMuMDYgMS4yNy4wNyAxLjY1LjA3IDQuODVzLS4wMSAzLjU4LS4wNyA0Ljg1Yy0uMDUgMS4xNy0uMjUgMS44MS0uNDIgMi4yMy0uMjIuNTYtLjQ4Ljk2LS45IDEuMzgtLjQyLjQyLS44Mi42OC0xLjM4LjktLjQyLjE3LTEuMDYuMzctMi4yMy40Mi0xLjI3LjA2LTEuNjUuMDctNC44NS4wN3MtMy41OC0uMDEtNC44NS0uMDdjLTEuMTctLjA1LTEuODEtLjI1LTIuMjMtLjQyLS41Ni0uMjItLjk2LS40OC0xLjM4LS45LS40Mi0uNDItLjY4LS44Mi0uOS0xLjM4LS4xNy0uNDItLjM3LTEuMDYtLjQyLTIuMjMtLjA2LTEuMjctLjA3LTEuNjUuMDctNC44NS4wN3oiLz48cGF0aCBmaWxsPSIjMDBmM2ZmIiBkPSJNMTIgNS44M2MtMy40IDAtNi4xNyAyLjc3LTYuMTcgNi4xN3MyLjc3IDYuMTcgNi4xNyA2LjE3IDYuMTctMi43NyA2LjE3LTYuMTctMi43Ny02LjE3LTYuMTctNi4xN3ptMCAxMC4xN2MtMi4yMSAwLTQtMS43OS00LTRzMS43OS00IDQtNCA0IDEuNzkgNCA0LTEuNzkgNC00IDR6Ii8+PC9zdmc+'" />
                     </div>
                     <div class="contact-info">
                         <h3>Instagram</h3>
@@ -717,3 +717,28 @@ document.addEventListener('DOMContentLoaded', () => {
         popup.addEventListener('click', (e) => e.stopPropagation());
     });
 });
+
+function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+        section.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+}
+
+function downloadResume() {
+    // Replace 'path/to/your/resume.pdf' with the actual path to your resume file
+    const resumeUrl = 'assets/resume_ajulkjose.pdf';
+    
+    // Open resume in new tab
+    window.open(resumeUrl, '_blank');
+    
+    // Add glitch effect to download button
+    const downloadBtn = document.querySelector('.download-btn');
+    downloadBtn.style.transform = 'translate(2px, -2px)';
+    setTimeout(() => {
+        downloadBtn.style.transform = 'none';
+    }, 150);
+}

@@ -19,27 +19,10 @@
             <div class="logo">
                 <div class="logo-glitch-container">
                     <span class="logo-text">&lt;/&gt;</span>
-                    <span class="logo-glitch">DEV</span>
+                    <span class="logo-glitch">AJUL K JOSE</span>
                 </div>
             </div>
-            <div class="nav-links">
-                <a href="#home" class="nav-item">
-                    <span class="nav-line"></span>
-                    <span class="nav-text">HOME</span>
-                </a>
-                <a href="#projects" class="nav-item">
-                    <span class="nav-line"></span>
-                    <span class="nav-text">PROJECTS</span>
-                </a>
-                <a href="#about" class="nav-item">
-                    <span class="nav-line"></span>
-                    <span class="nav-text">ABOUT</span>
-                </a>
-                <a href="#contact" class="nav-item">
-                    <span class="nav-line"></span>
-                    <span class="nav-text">CONTACT</span>
-                </a>
-            </div>
+            
         </nav>
     </header>
 
@@ -89,10 +72,20 @@
 
             <div class="hero-content">
                 <h1 class="cyber-glitch">Hello, I'm <span class="highlight">Ajul K Jose</span></h1>
-                <p class="cyber-text">Full Stack Developer | UI Designer | Software Developer</p>
+                <p class="cyber-text">Full Stack Developer | Flutter Developer | Software Developer</p>
                 <div class="cta-buttons">
-                    <button class="cyber-button">View Projects</button>
-                    <button class="cyber-button">Contact Me</button>
+                    <button class="cyber-button" onclick="scrollToSection('projects')">
+                        <span class="button-icon">🎯</span>
+                        View Projects
+                    </button>
+                    <button class="cyber-button" onclick="scrollToSection('contact')">
+                        <span class="button-icon">📞</span>
+                        Contact Me
+                    </button>
+                    <button class="cyber-button download-btn" onclick="downloadResume()">
+                        <span class="download-icon">📄</span>
+                        Download Resume
+                    </button>
                 </div>
             </div>
             
@@ -111,12 +104,12 @@
                     <div class="stat-card-glitch"></div>
                 </div>
                 
-                <div class="stat-card">
+                <!-- <div class="stat-card">
                     <div class="stat-icon">⭐</div>
-                    <div class="stat-number" data-target="0">0</div>
+                    <div class="stat-number" data-target="0">43</div>
                     <div class="stat-label">GitHub Stars</div>
                     <div class="stat-card-glitch"></div>
-                </div>
+                </div> -->
                 
                 <div class="stat-card">
                     <div class="stat-icon">👥</div>
@@ -127,7 +120,7 @@
                 
                 <div class="stat-card">
                     <div class="stat-icon">🤝</div>
-                    <div class="stat-number" data-target="0">0</div>
+                    <div class="stat-number" data-target="15">15</div>
                     <div class="stat-label">Happy Clients</div>
                     <div class="stat-card-glitch"></div>
                 </div>
@@ -144,7 +137,7 @@
                 <div class="card-glitch-effect"></div>
             </div>
 
-            <div class="card projects-card">
+            <div id="projects" class="card projects-card">
                 <div class="card-content">
                     <div class="card-icon">💻</div>
                     <h2>Projects</h2>
@@ -162,7 +155,7 @@
                 <div class="card-glitch-effect"></div>
             </div>
 
-            <div class="card contact-card">
+            <div id="contact" class="card contact-card">
                 <div class="card-content">
                     <div class="card-icon">📧</div>
                     <h2>Contact</h2>
