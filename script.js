@@ -268,19 +268,23 @@ document.addEventListener('DOMContentLoaded', function() {
         if (nextSection >= 0 && nextSection < sections.length) {
             // Remove active class from current section
             sections[currentSection].classList.remove('active');
+            sections[currentSection].scrollTop = 0; // Reset scroll position
             
             // Add active class to next section
             sections[nextSection].classList.add('active');
             
             currentSection = nextSection;
             
-            // Update navigation dots if they exist
+            // Update navigation dots
             updateNavDots();
+            
+            // Update navbar active state
+            updateNavbarActiveState(sections[currentSection].id);
         }
         
         setTimeout(() => {
             isAnimating = false;
-        }, 800); // Match this with your CSS transition time
+        }, 800);
     }
 
     // Handle mouse wheel
@@ -358,6 +362,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 const direction = targetIndex - currentSection;
                 handleNavigation(direction);
             }
+        });
+    });
+
+    // Add function to update navbar active state
+    function updateNavbarActiveState(sectionId) {
+        document.querySelectorAll('.nav-link').forEach(link => {
+            const href = link.getAttribute('href').substring(1);
+            link.classList.toggle('active', href === sectionId);
+        });
+    }
+
+    // Add scroll restoration for sections
+    document.querySelectorAll('section').forEach(section => {
+        section.addEventListener('scroll', (e) => {
+            e.stopPropagation();
         });
     });
 });
