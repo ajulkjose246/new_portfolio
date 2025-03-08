@@ -594,7 +594,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Update navigation links
-    const navLinks = document.querySelectorAll('.nav-link');
+    const navLinks = document.querySelectorAll('.nav-link, .vw-btn');
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
@@ -777,6 +777,21 @@ class Chatbot {
                 "Let me know if you'd like to know about projects, skills, or how to get in touch with Ajul!"
             ]
         };
+        
+        // Add these new event listeners
+        this.messagesContainer.addEventListener('wheel', (e) => {
+            e.stopPropagation();
+        });
+        
+        this.messagesContainer.addEventListener('touchmove', (e) => {
+            e.stopPropagation();
+        }, { passive: true });
+        
+        // Prevent body scroll when touching chatbot
+        this.box = document.querySelector('.chatbot-box');
+        this.box.addEventListener('touchmove', (e) => {
+            e.stopPropagation();
+        }, { passive: true });
     }
 
     initializeEventListeners() {
