@@ -99,12 +99,8 @@ function init() {
     // Handle window resize
     window.addEventListener('resize', onWindowResize, false);
 
-    // Remove loading screen with fade
-    const loadingScreen = document.querySelector('.loading-screen');
-    loadingScreen.style.opacity = '0';
-    setTimeout(() => {
-        loadingScreen.style.display = 'none';
-    }, 500);
+    // Remove loading screen
+    removeLoadingScreen();
 
     // Navbar hide/show on scroll
     let lastScroll = 0;
@@ -146,13 +142,11 @@ function updateSections() {
         const rect = section.getBoundingClientRect();
         const viewportHeight = window.innerHeight;
         
-        // Calculate how far the section is through the viewport
+        // Calculate opacity based on scroll position
         const distanceFromTop = rect.top;
         const sectionHeight = rect.height;
         
-        // Calculate opacity and transform based on scroll position
         let opacity = 1;
-        let transform = 0;
         
         if (distanceFromTop < -sectionHeight) {
             opacity = 0;
@@ -160,12 +154,10 @@ function updateSections() {
             opacity = 0;
         } else {
             opacity = 1 - Math.abs(distanceFromTop / viewportHeight);
-            transform = distanceFromTop * 0.2;
         }
         
-        // Apply smooth transitions
+        // Apply only opacity, no transform
         section.style.opacity = opacity;
-        section.style.transform = `translateY(${transform}px)`;
     });
 }
 
@@ -175,8 +167,181 @@ function onWindowResize() {
     renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
-// Initialize Three.js scene when the page loads
-window.addEventListener('load', init);
+// Modify your event listener to ensure loading screen is removed
+window.addEventListener('load', () => {
+    init();
+    removeLoadingScreen(); // Add extra call here for safety
+});
+
+// Add a timeout as a fallback
+setTimeout(removeLoadingScreen, 3000); // Fallback after 3 seconds
+
+// Remove or combine duplicate style declarations
+// Keep only one style declaration and combine all the styles
+const styleSheet = document.createElement('style');
+styleSheet.textContent = `
+    /* Navigation dots styles */
+    .navigation-dots {
+        position: fixed;
+        right: 2rem;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        z-index: 1000;
+    }
+
+    .nav-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .nav-dot.active {
+        background: var(--primary);
+        transform: scale(1.3);
+    }
+
+    .nav-dot:hover {
+        background: var(--primary);
+    }
+
+    /* Loading screen styles */
+    .loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--dark);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 0.5s ease;
+    }
+
+    .loader {
+        text-align: center;
+    }
+
+    .loader-text {
+        color: var(--primary);
+        margin-bottom: 1rem;
+    }
+
+    .progress-bar {
+        width: 200px;
+        height: 2px;
+        background: rgba(255,255,255,0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .progress-bar::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 50%;
+        background: var(--primary);
+        animation: progress 1s infinite linear;
+    }
+
+    @keyframes progress {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(200%); }
+    }
+
+    /* Section styles */
+    section {
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.8s ease, visibility 0.8s;
+    }
+
+    section.active {
+        visibility: visible;
+        opacity: 1;
+        z-index: 1;
+    }
+
+    #about {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    #about .section-content {
+        min-height: 100%;
+        padding-bottom: 2rem;
+    }
+
+    .scroll-reminder::after {
+        content: '↓';
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 24px;
+        color: var(--primary);
+        animation: bounce 1s infinite;
+    }
+
+    @keyframes bounce {
+        0%, 100% { transform: translateX(-50%) translateY(0); }
+        50% { transform: translateX(-50%) translateY(-10px); }
+    }
+
+    #about .section-content {
+        height: 100vh;
+        overflow-y: auto;
+        scroll-behavior: smooth;
+        padding-top: 80px;
+        padding-bottom: 40px;
+    }
+
+    .scroll-reminder::after {
+        content: '↓ Scroll to continue';
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--primary);
+        color: var(--dark);
+        padding: 10px 20px;
+        border-radius: 20px;
+        font-size: 14px;
+        animation: bounce 1s infinite;
+        z-index: 1000;
+    }
+`;
+document.head.appendChild(styleSheet);
+
+// Add this new function to handle loading screen removal
+function removeLoadingScreen() {
+    console.log('Attempting to remove loading screen');
+    const loadingScreen = document.querySelector('.loading-screen');
+    if (loadingScreen) {
+        console.log('Loading screen found, removing...');
+        loadingScreen.style.opacity = '0';
+        setTimeout(() => {
+            loadingScreen.style.display = 'none';
+            console.log('Loading screen removed');
+        }, 500);
+    } else {
+        console.log('Loading screen not found');
+    }
+}
 
 // Clean up
 window.addEventListener('unload', () => {
@@ -262,36 +427,77 @@ document.addEventListener('DOMContentLoaded', function() {
     function handleNavigation(direction) {
         if (isAnimating) return;
         
-        isAnimating = true;
         const nextSection = currentSection + direction;
         
-        if (nextSection >= 0 && nextSection < sections.length) {
-            // Remove active class from current section
-            sections[currentSection].classList.remove('active');
-            sections[currentSection].scrollTop = 0; // Reset scroll position
+        if (currentSection === 1 && direction > 0) {
+            const aboutContent = document.querySelector('#about .section-content');
+            const isAtBottom = Math.abs(
+                aboutContent.scrollHeight - aboutContent.scrollTop - aboutContent.clientHeight
+            ) <= 5;
             
-            // Add active class to next section
-            sections[nextSection].classList.add('active');
-            
-            currentSection = nextSection;
-            
-            // Update navigation dots
-            updateNavDots();
-            
-            // Update navbar active state
-            updateNavbarActiveState(sections[currentSection].id);
+            if (!isAtBottom) {
+                aboutContent.classList.add('scroll-reminder');
+                setTimeout(() => {
+                    aboutContent.classList.remove('scroll-reminder');
+                }, 1000);
+                return;
+            }
         }
+
+        isAnimating = true;
         
-        setTimeout(() => {
+        if (nextSection >= 0 && nextSection < sections.length) {
+            // Use opacity for transitions instead of transforms
+            sections[currentSection].style.opacity = '0';
+            sections[currentSection].style.visibility = 'hidden';
+            sections[currentSection].classList.remove('active');
+            sections[currentSection].scrollTop = 0;
+            
+            setTimeout(() => {
+                sections[nextSection].style.opacity = '1';
+                sections[nextSection].style.visibility = 'visible';
+                sections[nextSection].classList.add('active');
+                currentSection = nextSection;
+                updateNavDots();
+                updateNavbarActiveState(sections[currentSection].id);
+                
+                setTimeout(() => {
+                    isAnimating = false;
+                }, 300);
+            }, 300);
+        } else {
             isAnimating = false;
-        }, 800);
+        }
     }
 
     // Handle mouse wheel
     window.addEventListener('wheel', function(e) {
+        e.preventDefault();
+        
+        if (currentSection === 1) { // About section
+            const aboutSection = document.querySelector('#about');
+            const aboutContent = aboutSection.querySelector('.section-content');
+            
+            if (e.deltaY > 0) { // Scrolling down
+                if (aboutContent.scrollTop + aboutContent.clientHeight < aboutContent.scrollHeight) {
+                    aboutContent.scrollTop += 50;
+                    return;
+                } else {
+                    handleNavigation(1); // Go to next section when at bottom
+                }
+            } else { // Scrolling up
+                if (aboutContent.scrollTop > 0) {
+                    aboutContent.scrollTop -= 50;
+                    return;
+                } else {
+                    handleNavigation(-1); // Go to previous section when at top
+                }
+            }
+        } else {
         const direction = e.deltaY > 0 ? 1 : -1;
         handleNavigation(direction);
-    });
+        }
+    }, { passive: false });
 
     // Handle touch events
     let touchStartY = 0;
@@ -379,38 +585,121 @@ document.addEventListener('DOMContentLoaded', function() {
             e.stopPropagation();
         });
     });
+
+    // Add this to your existing JavaScript
+    function handleAboutSection() {
+        const aboutSection = document.querySelector('#about');
+        const aboutContent = aboutSection.querySelector('.section-content');
+        let canMoveNext = false;
+
+        // Function to check if user has scrolled to bottom
+        function isScrolledToBottom(element) {
+            return Math.abs(element.scrollHeight - element.scrollTop - element.clientHeight) < 1;
+        }
+
+        // Add scroll event listener to about section
+        aboutContent.addEventListener('scroll', () => {
+            if (isScrolledToBottom(aboutContent)) {
+                canMoveNext = true;
+                aboutContent.classList.add('scrolled-complete');
+            }
+        });
+    }
+
+    // Initialize the about section handling
+    document.addEventListener('DOMContentLoaded', () => {
+        handleAboutSection();
+    });
+
+    // Add touch handling with horizontal scroll prevention
+    window.addEventListener('touchmove', function(e) {
+        if (currentSection === 1) {
+            const aboutContent = document.querySelector('#about .section-content');
+            if (aboutContent.scrollTop > 0 && 
+                aboutContent.scrollTop + aboutContent.clientHeight < aboutContent.scrollHeight) {
+                e.stopPropagation();
+            }
+        }
+    }, { passive: true });
 });
 
-// Add these styles for navigation dots
-const style = document.createElement('style');
-style.textContent = `
-    .navigation-dots {
-        position: fixed;
-        right: 2rem;
-        top: 50%;
-        transform: translateY(-50%);
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        z-index: 1000;
-    }
+// Add this function to initialize section handling
+function initializeSections() {
+    const sections = document.querySelectorAll('section');
+    let currentSection = 0;
+    let isAnimating = false;
+    let lastScrollTime = 0;
+    
+    // Set initial active section
+    sections[0].classList.add('active');
+    
+    // Handle scroll within About section
+    const aboutSection = document.querySelector('#about');
+    aboutSection.addEventListener('scroll', function(e) {
+        e.stopPropagation();
+    });
+    
+    // Handle mouse wheel with improved scroll detection
+    window.addEventListener('wheel', function(e) {
+        e.preventDefault();
+        
+        const now = Date.now();
+        if (now - lastScrollTime < 50) return; // Debounce scroll events
+        lastScrollTime = now;
+        
+        if (currentSection === 1) { // About section
+            const aboutContainer = document.querySelector('#about');
+            const delta = e.deltaY;
+            
+            if (delta > 0) { // Scrolling down
+                if (aboutContainer.scrollTop + aboutContainer.clientHeight < aboutContainer.scrollHeight) {
+                    aboutContainer.scrollTop += 50; // Smooth scroll within about section
+                    return;
+                }
+            } else { // Scrolling up
+                if (aboutContainer.scrollTop > 0) {
+                    aboutContainer.scrollTop -= 50;
+                    return;
+                }
+            }
+        }
+        
+        const direction = e.deltaY > 0 ? 1 : -1;
+        handleNavigation(direction);
+    }, { passive: false });
+    
+    // Handle touch events with improved detection
+    let touchStartY = 0;
+    let touchStartTime = 0;
+    
+    window.addEventListener('touchstart', function(e) {
+        touchStartY = e.touches[0].clientY;
+        touchStartTime = Date.now();
+    });
+    
+    window.addEventListener('touchmove', function(e) {
+        if (currentSection === 1) {
+            e.stopPropagation();
+        }
+    });
+    
+    window.addEventListener('touchend', function(e) {
+        const touchEndY = e.changedTouches[0].clientY;
+        const touchEndTime = Date.now();
+        const touchDuration = touchEndTime - touchStartTime;
+        
+        // Only handle quick swipes
+        if (touchDuration < 300) {
+            const direction = touchStartY > touchEndY ? 1 : -1;
+            if (Math.abs(touchStartY - touchEndY) > 50) {
+                handleNavigation(direction);
+            }
+        }
+    });
+}
 
-    .nav-dot {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.3);
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-    .nav-dot.active {
-        background: var(--primary);
-        transform: scale(1.3);
-    }
-
-    .nav-dot:hover {
-        background: var(--primary);
-    }
-`;
-document.head.appendChild(style);
+// Initialize when document is ready
+document.addEventListener('DOMContentLoaded', function() {
+    initializeSections();
+    // ... rest of your initialization code ...
+});

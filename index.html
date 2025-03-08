@@ -15,7 +15,7 @@
 
     <div class="loading-screen">
         <div class="loader">
-            <span class="loader-text">Loading</span>
+            <span class="loader-text">Loading...</span>
             <div class="progress-bar"></div>
         </div>
     </div>
@@ -68,24 +68,114 @@
         <section id="about" class="py-5">
             <div class="section-content">
                 <div class="container">
-                    <h2 class="text-center mb-5">About Me</h2>
-                    <div class="row align-items-center">
-                        <div class="col-lg-6 mb-4 mb-lg-0">
-                            <img src="your-image.jpg" alt="Profile" class="img-fluid rounded-3 shadow">
-                        </div>
-                        <div class="col-lg-6">
-                            <h3 class="mb-4">Who am I?</h3>
-                            <p class="lead mb-4">A passionate Software Developer with expertise in creating modern web applications.</p>
-                            <div class="skills-wrapper">
-                                <h4 class="mb-3">Skills</h4>
-                                <div class="row g-3">
-                                    <div class="col-6 col-md-4">
-                                        <div class="skill-item p-3 text-center rounded-3">
-                                            <i class="fab fa-html5 fa-2x mb-2"></i>
-                                            <p>HTML5</p>
+                    <h2 class="section-title text-center mb-5">About Me</h2>
+                    <div class="row align-items-center gy-5">
+                        <div class="col-lg-4">
+                            <div class="profile-card">
+                                <div class="profile-wrapper">
+                                    <div class="profile-border"></div>
+                                    <div class="profile-content">
+                                        <div class="profile-image-container">
+                                            <img src="./assets/img/profile1.png" alt="Profile" class="profile-image">
+                                            <div class="profile-glow"></div>
+                                        </div>
+                                        <div class="profile-details">
+                                            <h4 class="profile-name">Ajul K Jose</h4>
+                                            <p class="profile-role">Software Developer</p>
+                                            <div class="social-links">
+                                                <a href="#" class="social-icon" aria-label="GitHub">
+                                                    <i class="fab fa-github"></i>
+                                                </a>
+                                                <a href="#" class="social-icon" aria-label="LinkedIn">
+                                                    <i class="fab fa-linkedin-in"></i>
+                                                </a>
+                                                <a href="#" class="social-icon" aria-label="Twitter">
+                                                    <i class="fab fa-twitter"></i>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
-                                    <!-- Add more skills -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="about-content">
+                                <div class="about-header">
+                                    <div class="title-wrapper">
+                                        <h3 class="section-subtitle">ABOUT ME</h3>
+                                        <h2 class="glitch-text" data-text="Who am I?">Who am I?</h2>
+                                    </div>
+                                    <div class="experience-badge">
+                                        <span class="exp-number">4+</span>
+                                        <span class="exp-text">Years of<br>Experience</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="about-description">
+                                    <p class="lead typing-text">A passionate Software Developer with expertise in creating modern web applications and turning ideas into reality.</p>
+                                    <div class="key-points">
+                                        <div class="point">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Full Stack Development</span>
+                                        </div>
+                                        <div class="point">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>UI/UX Design</span>
+                                        </div>
+                                        <div class="point">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Problem Solving</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="skills-wrapper">
+                                    <h4 class="skills-title">Technical Expertise</h4>
+                                    <div class="skills-grid">
+                                        <div class="skill-card" data-skill="95">
+                                            <div class="skill-header">
+                                                <i class="fab fa-html5"></i>
+                                                <span class="skill-percentage">95%</span>
+                                            </div>
+                                            <h5>HTML5</h5>
+                                            <div class="skill-bar">
+                                                <div class="skill-progress"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="skill-card" data-skill="90">
+                                            <div class="skill-header">
+                                                <i class="fab fa-css3-alt"></i>
+                                                <span class="skill-percentage">90%</span>
+                                            </div>
+                                            <h5>CSS3</h5>
+                                            <div class="skill-bar">
+                                                <div class="skill-progress"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="skill-card" data-skill="85">
+                                            <div class="skill-header">
+                                                <i class="fab fa-js"></i>
+                                                <span class="skill-percentage">85%</span>
+                                            </div>
+                                            <h5>JavaScript</h5>
+                                            <div class="skill-bar">
+                                                <div class="skill-progress"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="skill-card" data-skill="80">
+                                            <div class="skill-header">
+                                                <i class="fab fa-react"></i>
+                                                <span class="skill-percentage">80%</span>
+                                            </div>
+                                            <h5>React</h5>
+                                            <div class="skill-bar">
+                                                <div class="skill-progress"></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -101,7 +191,7 @@
                     <div class="row g-4">
                         <div class="col-md-6 col-lg-4">
                             <div class="card project-card h-100">
-                                <img src="project1.jpg" class="card-img-top" alt="Project 1">
+                                <img src="./assets/img/project1.jpg" class="card-img-top" alt="Project 1">
                                 <div class="card-body">
                                     <h5 class="card-title">Project Title</h5>
                                     <p class="card-text">Project description goes here.</p>
