@@ -16,7 +16,6 @@
     <div class="loading-screen">
         <div class="loader">
             <div class="loader-content">
-                <div class="binary-text">01101100 01101111 01100001 01100100 01101001 01101110 01100111</div>
                 <div class="loader-circle">
                     <div class="circle-border"></div>
                     <div class="circle-core"></div>
@@ -198,22 +197,57 @@
         <section id="projects" class="py-5">
             <div class="section-content">
                 <div class="container">
-                    <h2 class="text-center mb-5">My Projects</h2>
-                    <div class="row g-4">
-                        <div class="col-md-6 col-lg-4">
-                            <div class="card project-card h-100">
-                                <img src="./assets/img/project1.jpg" class="card-img-top" alt="Project 1">
-                                <div class="card-body">
-                                    <h5 class="card-title">Project Title</h5>
-                                    <p class="card-text">Project description goes here.</p>
-                                    <div class="d-flex gap-2">
-                                        <a href="#" class="btn btn-primary">Demo</a>
-                                        <a href="#" class="btn btn-outline-primary">Code</a>
-                                    </div>
+                    <h2 class="section-title text-center mb-5">My Projects</h2>
+                    <div class="projects-grid">
+                        <!-- Project Card 1 -->
+                        <div class="project-card">
+                            <div class="project-icon">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div class="project-content">
+                                <h3 class="project-title">Project Title</h3>
+                                <p class="project-description">A brief description of the project and its key features.</p>
+                                <div class="tech-stack">
+                                    <span>React</span>
+                                    <span>Node.js</span>
+                                    <span>MongoDB</span>
                                 </div>
                             </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link" title="Live Demo">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                                <a href="#" class="project-link" title="Source Code">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            </div>
                         </div>
-                        <!-- Add more project cards -->
+
+                        <!-- Project Card 2 -->
+                        <div class="project-card">
+                            <div class="project-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div class="project-content">
+                                <h3 class="project-title">Mobile App</h3>
+                                <p class="project-description">Mobile application with modern features and clean UI.</p>
+                                <div class="tech-stack">
+                                    <span>Flutter</span>
+                                    <span>Firebase</span>
+                                    <span>REST API</span>
+                                </div>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link" title="Live Demo">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                                <a href="#" class="project-link" title="Source Code">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Add more project cards as needed -->
                     </div>
                 </div>
             </div>
@@ -222,21 +256,68 @@
         <section id="contact" class="py-5">
             <div class="section-content">
                 <div class="container">
-                    <h2 class="text-center mb-5">Get In Touch</h2>
+                    <h2 class="section-title text-center mb-5">Get In Touch</h2>
                     <div class="row justify-content-center">
-                        <div class="col-md-8 col-lg-6">
-                            <form class="contact-form p-4 rounded-3 shadow-sm">
-                                <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="Your Name">
+                        <div class="col-md-10">
+                            <div class="contact-wrapper">
+                                <div class="contact-info">
+                                    <div class="contact-header">
+                                        <h3>Let's Connect</h3>
+                                        <p>Feel free to reach out for collaborations or just a friendly hello</p>
+                                    </div>
+                                    <div class="contact-details">
+                                        <div class="contact-item">
+                                            <i class="fas fa-envelope"></i>
+                                            <div class="contact-text">
+                                                <h4>Email</h4>
+                                                <a href="mailto:your.email@example.com">your.email@example.com</a>
+                                            </div>
+                                        </div>
+                                        <div class="contact-item">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <div class="contact-text">
+                                                <h4>Location</h4>
+                                                <p>Your Location, Country</p>
+                                            </div>
+                                        </div>
+                                        <div class="contact-social">
+                                            <a href="#" class="social-btn" aria-label="GitHub">
+                                                <i class="fab fa-github"></i>
+                                            </a>
+                                            <a href="#" class="social-btn" aria-label="LinkedIn">
+                                                <i class="fab fa-linkedin-in"></i>
+                                            </a>
+                                            <a href="#" class="social-btn" aria-label="Twitter">
+                                                <i class="fab fa-twitter"></i>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="mb-3">
-                                    <input type="email" class="form-control" placeholder="Your Email">
-                                </div>
-                                <div class="mb-3">
-                                    <textarea class="form-control" rows="5" placeholder="Your Message"></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-primary w-100">Send Message</button>
-                            </form>
+                                <form class="contact-form">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <span class="input-icon"><i class="fas fa-user"></i></span>
+                                            <input type="text" class="form-control" placeholder="Your Name" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <span class="input-icon"><i class="fas fa-envelope"></i></span>
+                                            <input type="email" class="form-control" placeholder="Your Email" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <span class="input-icon"><i class="fas fa-pen"></i></span>
+                                            <textarea class="form-control" rows="4" placeholder="Your Message" required></textarea>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="submit-btn">
+                                        <span>Send Message</span>
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
