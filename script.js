@@ -664,81 +664,68 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Add this function to initialize section handling
 function initializeSections() {
-    const sections = document.querySelectorAll('section');
-    let currentSection = 0;
-    let isAnimating = false;
-    let lastScrollTime = 0;
-    
-    // Set initial active section
-    sections[0].classList.add('active');
-    
-    // Handle scroll within About section
-    const aboutSection = document.querySelector('#about');
-    aboutSection.addEventListener('scroll', function(e) {
-        e.stopPropagation();
-    });
-    
-    // Handle mouse wheel with improved scroll detection
-    window.addEventListener('wheel', function(e) {
-        e.preventDefault();
-        
-        const now = Date.now();
-        if (now - lastScrollTime < 50) return; // Debounce scroll events
-        lastScrollTime = now;
-        
-        if (currentSection === 1) { // About section
-            const aboutContainer = document.querySelector('#about');
-            const delta = e.deltaY;
-            
-            if (delta > 0) { // Scrolling down
-                if (aboutContainer.scrollTop + aboutContainer.clientHeight < aboutContainer.scrollHeight) {
-                    aboutContainer.scrollTop += 50; // Smooth scroll within about section
-                    return;
-                }
-            } else { // Scrolling up
-                if (aboutContainer.scrollTop > 0) {
-                    aboutContainer.scrollTop -= 50;
-                    return;
-                }
+    // Create an Intersection Observer for skill cards
+    const skillObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const skillCard = entry.target;
+                const progressBar = skillCard.querySelector('.skill-progress');
+                const percentage = skillCard.dataset.skill;
+                
+                // Animate the progress bar
+                progressBar.style.width = `${percentage}%`;
+                
+                // Animate the percentage number
+                const percentageSpan = skillCard.querySelector('.skill-percentage');
+                let currentValue = 0;
+                const duration = 1500; // Animation duration in milliseconds
+                const increment = percentage / (duration / 16); // Update every 16ms (60fps)
+                
+                const updateCounter = () => {
+                    if (currentValue < percentage) {
+                        currentValue += increment;
+                        if (currentValue > percentage) currentValue = percentage;
+                        percentageSpan.textContent = `${Math.round(currentValue)}%`;
+                        requestAnimationFrame(updateCounter);
+                    }
+                };
+                
+                updateCounter();
+                
+                // Unobserve after animation
+                skillObserver.unobserve(skillCard);
             }
-        }
-        
-        const direction = e.deltaY > 0 ? 1 : -1;
-        handleNavigation(direction);
-    }, { passive: false });
-    
-    // Handle touch events with improved detection
-    let touchStartY = 0;
-    let touchStartTime = 0;
-    
-    window.addEventListener('touchstart', function(e) {
-        touchStartY = e.touches[0].clientY;
-        touchStartTime = Date.now();
+        });
+    }, {
+        threshold: 0.5
     });
-    
-    window.addEventListener('touchmove', function(e) {
-        if (currentSection === 1) {
-            e.stopPropagation();
-        }
+
+    // Observe all skill cards
+    document.querySelectorAll('.skill-card').forEach(card => {
+        skillObserver.observe(card);
     });
-    
-    window.addEventListener('touchend', function(e) {
-        const touchEndY = e.changedTouches[0].clientY;
-        const touchEndTime = Date.now();
-        const touchDuration = touchEndTime - touchStartTime;
-        
-        // Only handle quick swipes
-        if (touchDuration < 300) {
-            const direction = touchStartY > touchEndY ? 1 : -1;
-            if (Math.abs(touchStartY - touchEndY) > 50) {
-                handleNavigation(direction);
+
+    // Create an observer for the about text
+    const aboutObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate');
+                aboutObserver.unobserve(entry.target);
             }
-        }
+        });
+    }, {
+        threshold: 0.5
     });
+
+    // Observe the about text
+    const aboutText = document.querySelector('.about-text');
+    if (aboutText) {
+        aboutObserver.observe(aboutText);
+    }
 }
 
-// Initialize when document is ready
-document.addEventListener('DOMContentLoaded', function() {
+// Add this to your existing DOMContentLoaded event listener
+document.addEventListener('DOMContentLoaded', () => {
     initializeSections();
     // ... rest of your initialization code ...
 });
