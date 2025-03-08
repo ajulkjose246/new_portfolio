@@ -470,6 +470,17 @@ main {
         max-width: 100%;
         margin: 0 auto;
     }
+
+    .cursor, .cursor-follower {
+        display: none !important;
+    }
+}
+
+/* For devices that don't support hover */
+@media (hover: none) {
+    .cursor, .cursor-follower {
+        display: none !important;
+    }
 }
 
 /* Override Bootstrap styles */
