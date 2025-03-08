@@ -33,6 +33,7 @@ a{
     justify-content: center;
     align-items: center;
     z-index: 9999;
+    transition: opacity 0.5s ease;
 }
 
 nav {
@@ -749,32 +750,102 @@ main {
 /* Loader */
 .loader {
     text-align: center;
+    font-family: 'Consolas', monospace;
 }
 
-.loader-text {
-    font-size: 1.2rem;
-    letter-spacing: 0.2em;
-    margin-bottom: 2rem;
-    text-transform: uppercase;
+.loader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
 }
 
-.progress-bar {
-    width: 200px;
-    height: 2px;
-    background: rgba(255,255,255,0.1);
+.binary-text {
+    color: var(--primary);
+    font-size: 0.8rem;
+    opacity: 0.7;
+    animation: binaryFade 2s infinite;
+    letter-spacing: 2px;
+}
+
+.loader-circle {
     position: relative;
-    overflow: hidden;
+    width: 120px;
+    height: 120px;
 }
 
-.progress-bar::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
+.circle-border {
+    width: 100%;
     height: 100%;
-    width: 50%;
-    background: var(--primary);
-    animation: progress 1s infinite;
+    padding: 3px;
+    position: absolute;
+    border-radius: 50%;
+    background: linear-gradient(0deg, transparent 33%, var(--primary) 100%);
+    animation: spin 1.5s linear infinite;
+}
+
+.circle-core {
+    width: 100%;
+    height: 100%;
+    background: var(--dark);
+    border-radius: 50%;
+    position: absolute;
+}
+
+.status-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.status-message {
+    color: var(--primary);
+    font-size: 1rem;
+    min-height: 1.5em;
+}
+
+.progress-status {
+    color: var(--light);
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.percentage {
+    color: var(--primary);
+}
+
+/* Animations */
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes binaryFade {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+}
+
+@keyframes glitch {
+    0% {
+        clip-path: inset(40% 0 61% 0);
+    }
+    20% {
+        clip-path: inset(92% 0 1% 0);
+    }
+    40% {
+        clip-path: inset(43% 0 1% 0);
+    }
+    60% {
+        clip-path: inset(25% 0 58% 0);
+    }
+    80% {
+        clip-path: inset(54% 0 7% 0);
+    }
+    100% {
+        clip-path: inset(58% 0 43% 0);
+    }
 }
 
 /* Hero Section */

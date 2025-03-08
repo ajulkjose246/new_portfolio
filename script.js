@@ -327,19 +327,54 @@ styleSheet.textContent = `
 `;
 document.head.appendChild(styleSheet);
 
-// Add this new function to handle loading screen removal
+// Update the loading screen removal function
 function removeLoadingScreen() {
-    console.log('Attempting to remove loading screen');
     const loadingScreen = document.querySelector('.loading-screen');
     if (loadingScreen) {
-        console.log('Loading screen found, removing...');
-        loadingScreen.style.opacity = '0';
-        setTimeout(() => {
-            loadingScreen.style.display = 'none';
-            console.log('Loading screen removed');
-        }, 500);
-    } else {
-        console.log('Loading screen not found');
+        const statusMessage = loadingScreen.querySelector('.status-message');
+        const percentage = loadingScreen.querySelector('.percentage');
+        let progress = 0;
+        
+        // Array of loading messages
+        const messages = [
+            'Initializing system...',
+            'Loading components...',
+            'Configuring modules...',
+            'Starting background processes...',
+            'Preparing user interface...',
+            'Almost ready...',
+            'System ready!'
+        ];
+        
+        let messageIndex = 0;
+        
+        // Update progress and messages
+        const updateLoader = setInterval(() => {
+            progress += Math.floor(Math.random() * 10) + 1;
+            if (progress > 100) progress = 100;
+            
+            percentage.textContent = progress;
+            
+            if (progress >= (messageIndex + 1) * (100 / messages.length)) {
+                if (messageIndex < messages.length - 1) {
+                    statusMessage.style.animation = 'glitch 0.3s ease';
+                    setTimeout(() => {
+                        statusMessage.style.animation = '';
+                        statusMessage.textContent = messages[++messageIndex];
+                    }, 300);
+                }
+            }
+            
+            if (progress === 100) {
+                clearInterval(updateLoader);
+                setTimeout(() => {
+                    loadingScreen.style.opacity = '0';
+                    setTimeout(() => {
+                        loadingScreen.style.display = 'none';
+                    }, 500);
+                }, 500);
+            }
+        }, 150);
     }
 }
 
