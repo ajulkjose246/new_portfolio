@@ -468,16 +468,19 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const nextSection = currentSection + direction;
         
-        if (currentSection === 1 && direction > 0) {
-            const aboutContent = document.querySelector('#about .section-content');
+        // Handle scrolling for About and Projects sections
+        if ((currentSection === 1 || currentSection === 2) && direction > 0) {
+            const currentContent = document.querySelector(
+                `${currentSection === 1 ? '#about' : '#projects'} .section-content`
+            );
             const isAtBottom = Math.abs(
-                aboutContent.scrollHeight - aboutContent.scrollTop - aboutContent.clientHeight
+                currentContent.scrollHeight - currentContent.scrollTop - currentContent.clientHeight
             ) <= 5;
             
             if (!isAtBottom) {
-                aboutContent.classList.add('scroll-reminder');
+                currentContent.classList.add('scroll-reminder');
                 setTimeout(() => {
-                    aboutContent.classList.remove('scroll-reminder');
+                    currentContent.classList.remove('scroll-reminder');
                 }, 1000);
                 return;
             }
@@ -486,7 +489,6 @@ document.addEventListener('DOMContentLoaded', function() {
         isAnimating = true;
         
         if (nextSection >= 0 && nextSection < sections.length) {
-            // Use opacity for transitions instead of transforms
             sections[currentSection].style.opacity = '0';
             sections[currentSection].style.visibility = 'hidden';
             sections[currentSection].classList.remove('active');
@@ -509,32 +511,33 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Handle mouse wheel
+    // Update wheel event handler
     window.addEventListener('wheel', function(e) {
         e.preventDefault();
         
-        if (currentSection === 1) { // About section
-            const aboutSection = document.querySelector('#about');
-            const aboutContent = aboutSection.querySelector('.section-content');
+        if (currentSection === 1 || currentSection === 2) { // About or Projects section
+            const currentContent = document.querySelector(
+                `${currentSection === 1 ? '#about' : '#projects'} .section-content`
+            );
             
             if (e.deltaY > 0) { // Scrolling down
-                if (aboutContent.scrollTop + aboutContent.clientHeight < aboutContent.scrollHeight) {
-                    aboutContent.scrollTop += 50;
+                if (currentContent.scrollTop + currentContent.clientHeight < currentContent.scrollHeight) {
+                    currentContent.scrollTop += 50;
                     return;
                 } else {
                     handleNavigation(1); // Go to next section when at bottom
                 }
             } else { // Scrolling up
-                if (aboutContent.scrollTop > 0) {
-                    aboutContent.scrollTop -= 50;
+                if (currentContent.scrollTop > 0) {
+                    currentContent.scrollTop -= 50;
                     return;
                 } else {
                     handleNavigation(-1); // Go to previous section when at top
                 }
             }
         } else {
-        const direction = e.deltaY > 0 ? 1 : -1;
-        handleNavigation(direction);
+            const direction = e.deltaY > 0 ? 1 : -1;
+            handleNavigation(direction);
         }
     }, { passive: false });
 
@@ -652,10 +655,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add touch handling with horizontal scroll prevention
     window.addEventListener('touchmove', function(e) {
-        if (currentSection === 1) {
-            const aboutContent = document.querySelector('#about .section-content');
-            if (aboutContent.scrollTop > 0 && 
-                aboutContent.scrollTop + aboutContent.clientHeight < aboutContent.scrollHeight) {
+        if (currentSection === 1 || currentSection === 2) {
+            const currentContent = document.querySelector(
+                `${currentSection === 1 ? '#about' : '#projects'} .section-content`
+            );
+            if (currentContent.scrollTop > 0 && 
+                currentContent.scrollTop + currentContent.clientHeight < currentContent.scrollHeight) {
                 e.stopPropagation();
             }
         }
@@ -721,6 +726,22 @@ function initializeSections() {
     const aboutText = document.querySelector('.about-text');
     if (aboutText) {
         aboutObserver.observe(aboutText);
+    }
+
+    // Add scroll handling for projects section
+    const projectsSection = document.querySelector('#projects .section-content');
+    if (projectsSection) {
+        projectsSection.addEventListener('scroll', () => {
+            const isAtBottom = Math.abs(
+                projectsSection.scrollHeight - projectsSection.scrollTop - projectsSection.clientHeight
+            ) < 1;
+            
+            if (isAtBottom) {
+                projectsSection.classList.add('scrolled-complete');
+            } else {
+                projectsSection.classList.remove('scrolled-complete');
+            }
+        });
     }
 }
 
