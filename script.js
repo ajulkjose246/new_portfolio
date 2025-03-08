@@ -742,3 +742,204 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeSections();
     // ... rest of your initialization code ...
 });
+
+// Add this to your existing JavaScript file
+class Chatbot {
+    constructor() {
+        this.toggle = document.querySelector('.chatbot-toggle');
+        this.box = document.querySelector('.chatbot-box');
+        this.closeBtn = document.querySelector('.close-btn');
+        this.input = document.querySelector('.chat-input');
+        this.sendBtn = document.querySelector('.send-btn');
+        this.messagesContainer = document.querySelector('.chat-messages');
+        this.suggestionChips = document.querySelectorAll('.chip');
+        
+        this.initializeEventListeners();
+        this.botResponses = {
+            greeting: [
+                "Hello! 👋 I'm your portfolio assistant. How can I help you today?",
+                "Hi there! 😊 Welcome to Ajul's portfolio. What would you like to know?"
+            ],
+            projects: [
+                "I'd be happy to tell you about the projects! Would you like to know about specific technologies or see all projects?",
+                "Great choice! Ajul has worked on various exciting projects. What type of projects interest you?"
+            ],
+            contact: [
+                this.createContactResponse(),
+                this.createContactResponse()
+            ],
+            social: [
+                this.createSocialResponse(),
+                this.createSocialResponse()
+            ],
+            default: [
+                "I'm not sure I understand. Would you like to know about Ajul's projects, skills, or contact information?",
+                "Let me know if you'd like to know about projects, skills, or how to get in touch with Ajul!"
+            ]
+        };
+    }
+
+    initializeEventListeners() {
+        this.toggle.addEventListener('click', () => this.toggleChat());
+        this.closeBtn.addEventListener('click', () => this.toggleChat());
+        this.sendBtn.addEventListener('click', () => this.handleSend());
+        this.input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') this.handleSend();
+        });
+        
+        this.suggestionChips.forEach(chip => {
+            chip.addEventListener('click', () => this.handleChipClick(chip.textContent));
+        });
+    }
+
+    toggleChat() {
+        this.box.classList.toggle('active');
+        if (this.box.classList.contains('active')) {
+            this.input.focus();
+            if (this.messagesContainer.children.length === 0) {
+                this.addMessage("Hi! 👋 I'm here to help you explore Ajul's portfolio. What would you like to know?", 'bot');
+            }
+        }
+    }
+
+    handleSend() {
+        const message = this.input.value.trim();
+        if (message) {
+            this.addMessage(message, 'user');
+            this.generateResponse(message);
+            this.input.value = '';
+        }
+    }
+
+    handleChipClick(text) {
+        const cleanText = text.toLowerCase();
+        if (cleanText.includes('hello')) {
+            this.addMessage(text, 'user');
+            this.generateResponse('hello');
+        } else if (cleanText.includes('projects')) {
+            this.addMessage(text, 'user');
+            this.generateResponse('projects');
+        } else if (cleanText.includes('contact')) {
+            this.addMessage(text, 'user');
+            this.generateResponse('contact');
+        }
+    }
+
+    createContactResponse() {
+        return {
+            text: "Here's how you can reach Ajul:",
+            buttons: [
+                {
+                    text: "📧 Email: ajulkjose246@gmail.com",
+                    url: "mailto:ajulkjose246@gmail.com",
+                    icon: "fa-envelope"
+                },
+                {
+                    text: "📱 Phone: +918078234246",
+                    url: "tel:+918078234246",
+                    icon: "fa-phone"
+                }
+            ]
+        };
+    }
+
+    createSocialResponse() {
+        return {
+            text: "Connect with Ajul on social media:",
+            buttons: [
+                {
+                    text: "GitHub",
+                    url: "https://github.com/ajulkjose246",
+                    icon: "fa-github"
+                },
+                {
+                    text: "LinkedIn",
+                    url: "https://www.linkedin.com/in/ajul-k-jose/",
+                    icon: "fa-linkedin-in"
+                },
+                {
+                    text: "Instagram",
+                    url: "https://www.instagram.com/_ajulkjose_/",
+                    icon: "fa-instagram"
+                },
+                {
+                    text: "X (Twitter)",
+                    url: "https://x.com/ajulkjose",
+                    icon: "fa-x-twitter"
+                }
+            ]
+        };
+    }
+
+    addMessage(content, sender) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message', `${sender}-message`);
+
+        if (typeof content === 'string') {
+            messageDiv.textContent = content;
+        } else {
+            // Create message with buttons
+            const textDiv = document.createElement('div');
+            textDiv.textContent = content.text;
+            messageDiv.appendChild(textDiv);
+
+            if (content.buttons) {
+                const buttonsDiv = document.createElement('div');
+                buttonsDiv.classList.add('message-buttons');
+                
+                content.buttons.forEach(button => {
+                    const btnLink = document.createElement('a');
+                    btnLink.href = button.url;
+                    btnLink.target = "_blank";
+                    btnLink.classList.add('message-button');
+                    
+                    const icon = document.createElement('i');
+                    icon.classList.add('fas', button.icon);
+                    btnLink.appendChild(icon);
+                    
+                    const text = document.createElement('span');
+                    text.textContent = button.text;
+                    btnLink.appendChild(text);
+                    
+                    buttonsDiv.appendChild(btnLink);
+                });
+                
+                messageDiv.appendChild(buttonsDiv);
+            }
+        }
+
+        this.messagesContainer.appendChild(messageDiv);
+        this.messagesContainer.scrollTop = this.messagesContainer.scrollHeight;
+    }
+
+    generateResponse(message) {
+        setTimeout(() => {
+            const lowerMessage = message.toLowerCase();
+            let response;
+
+            if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
+                response = this.getRandomResponse('greeting');
+            } else if (lowerMessage.includes('project')) {
+                response = this.getRandomResponse('projects');
+            } else if (lowerMessage.includes('contact') || lowerMessage.includes('email') || lowerMessage.includes('phone')) {
+                response = this.getRandomResponse('contact');
+            } else if (lowerMessage.includes('social') || lowerMessage.includes('github') || lowerMessage.includes('linkedin')) {
+                response = this.getRandomResponse('social');
+            } else {
+                response = this.getRandomResponse('default');
+            }
+
+            this.addMessage(response, 'bot');
+        }, 500);
+    }
+
+    getRandomResponse(type) {
+        const responses = this.botResponses[type];
+        return responses[Math.floor(Math.random() * responses.length)];
+    }
+}
+
+// Initialize chatbot when document is ready
+document.addEventListener('DOMContentLoaded', () => {
+    new Chatbot();
+});
