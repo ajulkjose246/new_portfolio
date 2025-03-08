@@ -87,12 +87,7 @@ section {
     visibility: hidden;
     opacity: 0;
     transition: opacity 0.8s ease, visibility 0.8s;
-    overflow-y: auto;
-    transform: none !important; /* Prevent transform causing horizontal scroll */
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    transform-style: flat !important;
-    -webkit-transform-style: flat !important;
+    overflow: hidden; /* Prevent double scrollbars */
 }
 
 section.active {
@@ -2187,4 +2182,178 @@ textarea.form-control {
 /* Ensure projects grid has proper spacing */
 .projects-grid {
     padding-bottom: 60px; /* Add extra padding for scroll indicator */
+}
+
+.position-sticky {
+    position: sticky;
+    top: 100px; /* Adjust this value based on your navbar height */
+    height: fit-content;
+}
+
+.scrollable-content {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    padding-right: 15px;
+    position: relative;
+    scroll-behavior: smooth;
+}
+
+/* Add scroll reminder animation */
+.scroll-reminder::after {
+    content: '↓ Scroll to continue';
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary);
+    color: var(--dark);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    animation: bounce 1s infinite;
+    z-index: 1000;
+    white-space: nowrap;
+}
+
+/* Add styles for scroll progress indicator */
+.scrollable-content::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 4px;
+    height: 0;
+    background: var(--primary);
+    transition: height 0.3s;
+    z-index: 2;
+}
+
+.scrollable-content.scrolled-complete::before {
+    height: 100%;
+}
+
+/* Custom scrollbar for the content */
+.scrollable-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scrollable-content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.scrollable-content::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 3px;
+}
+
+@media (max-width: 991px) {
+    section {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    #about, #projects {
+        height: 100vh;
+        overflow-y: auto;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+    
+    .section-content {
+        min-height: 100vh;
+        padding: 80px 15px 40px;
+    }
+    
+    .scrollable-content {
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
+    }
+    
+    .position-sticky {
+        position: relative !important;
+        top: 0 !important;
+    }
+    
+    /* Adjust scroll reminder for mobile */
+    .scroll-reminder::after {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--primary);
+        color: var(--dark);
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 14px;
+        white-space: nowrap;
+        z-index: 1000;
+    }
+}
+
+@keyframes bounce {
+    0%, 100% { 
+        transform: translateX(-50%) translateY(0);
+    }
+    50% { 
+        transform: translateX(-50%) translateY(-10px);
+    }
+}
+
+/* Update scrollable content styles for desktop */
+@media (min-width: 992px) {
+    .scrollable-content {
+        max-height: calc(100vh - 200px);
+        overflow-y: auto;
+        padding-right: 15px;
+        scroll-behavior: smooth;
+    }
+    
+    #about .about-content.scrollable-content,
+    #projects .section-content.scrollable-content {
+        height: calc(100vh - 200px);
+        overflow-y: auto;
+        position: relative;
+    }
+    
+    .position-sticky {
+        position: sticky;
+        top: 100px;
+        height: fit-content;
+    }
+    
+    /* Custom scrollbar for desktop */
+    .scrollable-content::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .scrollable-content::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+    }
+    
+    .scrollable-content::-webkit-scrollbar-thumb {
+        background: var(--primary);
+        border-radius: 3px;
+    }
+    
+    /* Scroll progress indicator */
+    .scrollable-content::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 4px;
+        height: 0;
+        background: var(--primary);
+        transition: height 0.3s;
+        z-index: 2;
+    }
+    
+    .scrolled-complete::before {
+        height: 100%;
+    }
 }

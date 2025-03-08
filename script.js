@@ -470,19 +470,51 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Handle scrolling for About and Projects sections
         if ((currentSection === 1 || currentSection === 2) && direction > 0) {
-            const currentContent = document.querySelector(
-                `${currentSection === 1 ? '#about' : '#projects'} .section-content`
-            );
-            const isAtBottom = Math.abs(
-                currentContent.scrollHeight - currentContent.scrollTop - currentContent.clientHeight
-            ) <= 5;
+            let currentContent;
+            let sectionElement;
             
-            if (!isAtBottom) {
-                currentContent.classList.add('scroll-reminder');
-                setTimeout(() => {
-                    currentContent.classList.remove('scroll-reminder');
-                }, 1000);
+            if (currentSection === 1) {
+                currentContent = document.querySelector('#about .about-content.scrollable-content');
+                sectionElement = document.querySelector('#about');
+            } else {
+                currentContent = document.querySelector('#projects .section-content.scrollable-content');
+                sectionElement = document.querySelector('#projects');
+            }
+            
+            // Add null check here
+            if (!currentContent || !sectionElement) {
+                console.warn('Content elements not found');
                 return;
+            }
+            
+            // Different behavior for mobile and desktop
+            if (window.innerWidth <= 991) {
+                const totalHeight = sectionElement.scrollHeight;
+                const viewportHeight = window.innerHeight;
+                const scrollPosition = sectionElement.scrollTop;
+                
+                // Don't proceed to next section if not scrolled to bottom
+                if (scrollPosition + viewportHeight < totalHeight - 10) {
+                    // Add scroll reminder
+                    sectionElement.classList.add('scroll-reminder');
+                    setTimeout(() => {
+                        sectionElement.classList.remove('scroll-reminder');
+                    }, 1000);
+                    return;
+                }
+            } else {
+                // Desktop behavior
+                const isAtBottom = Math.abs(
+                    currentContent.scrollHeight - currentContent.scrollTop - currentContent.clientHeight
+                ) <= 5;
+                
+                if (!isAtBottom) {
+                    currentContent.classList.add('scroll-reminder');
+                    setTimeout(() => {
+                        currentContent.classList.remove('scroll-reminder');
+                    }, 1000);
+                    return;
+                }
             }
         }
 
@@ -492,7 +524,12 @@ document.addEventListener('DOMContentLoaded', function() {
             sections[currentSection].style.opacity = '0';
             sections[currentSection].style.visibility = 'hidden';
             sections[currentSection].classList.remove('active');
-            sections[currentSection].scrollTop = 0;
+            
+            // Reset scroll position
+            const currentContent = sections[currentSection].querySelector('.scrollable-content');
+            if (currentContent) {
+                currentContent.scrollTop = 0;
+            }
             
             setTimeout(() => {
                 sections[nextSection].style.opacity = '1';
@@ -515,24 +552,37 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('wheel', function(e) {
         e.preventDefault();
         
-        if (currentSection === 1 || currentSection === 2) { // About or Projects section
-            const currentContent = document.querySelector(
-                `${currentSection === 1 ? '#about' : '#projects'} .section-content`
-            );
+        if (currentSection === 1 || currentSection === 2) {
+            let currentContent;
+            
+            if (currentSection === 1) {
+                currentContent = document.querySelector('#about .about-content.scrollable-content');
+            } else {
+                currentContent = document.querySelector('#projects .section-content.scrollable-content');
+            }
+            
+            if (!currentContent) {
+                console.warn('Scrollable content not found');
+                return;
+            }
             
             if (e.deltaY > 0) { // Scrolling down
-                if (currentContent.scrollTop + currentContent.clientHeight < currentContent.scrollHeight) {
+                const isAtBottom = Math.abs(
+                    currentContent.scrollHeight - currentContent.scrollTop - currentContent.clientHeight
+                ) <= 5;
+                
+                if (!isAtBottom) {
                     currentContent.scrollTop += 50;
                     return;
                 } else {
-                    handleNavigation(1); // Go to next section when at bottom
+                    handleNavigation(1);
                 }
             } else { // Scrolling up
                 if (currentContent.scrollTop > 0) {
                     currentContent.scrollTop -= 50;
                     return;
                 } else {
-                    handleNavigation(-1); // Go to previous section when at top
+                    handleNavigation(-1);
                 }
             }
         } else {
@@ -541,21 +591,71 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, { passive: false });
 
-    // Handle touch events
+    // Update touch event handlers
     let touchStartY = 0;
     let touchEndY = 0;
+    let isTouching = false;
 
     window.addEventListener('touchstart', function(e) {
         touchStartY = e.touches[0].clientY;
+        isTouching = true;
     });
 
-    window.addEventListener('touchend', function(e) {
-        touchEndY = e.changedTouches[0].clientY;
+    window.addEventListener('touchmove', function(e) {
+        if (!isTouching) return;
         
-        const direction = touchStartY > touchEndY ? 1 : -1;
-        if (Math.abs(touchStartY - touchEndY) > 50) { // Minimum swipe distance
-            handleNavigation(direction);
+        if (currentSection === 1 || currentSection === 2) {
+            const sectionElement = currentSection === 1 ? 
+                document.querySelector('#about') : 
+                document.querySelector('#projects');
+                
+            if (!sectionElement) return;
+            
+            const currentY = e.touches[0].clientY;
+            const deltaY = touchStartY - currentY;
+            
+            if (window.innerWidth <= 991) {
+                if (deltaY > 0) { // Scrolling up
+                    if (sectionElement.scrollTop + sectionElement.clientHeight < sectionElement.scrollHeight) {
+                        e.stopPropagation();
+                    }
+                } else if (deltaY < 0) { // Scrolling down
+                    if (sectionElement.scrollTop > 0) {
+                        e.stopPropagation();
+                    }
+                }
+            }
         }
+    }, { passive: true });
+
+    window.addEventListener('touchend', function(e) {
+        if (!isTouching) return;
+        
+        touchEndY = e.changedTouches[0].clientY;
+        const deltaY = touchStartY - touchEndY;
+        
+        if (Math.abs(deltaY) > 50) { // Minimum swipe distance
+            if (currentSection === 1 || currentSection === 2) {
+                const sectionElement = currentSection === 1 ? 
+                    document.querySelector('#about') : 
+                    document.querySelector('#projects');
+                    
+                if (!sectionElement) return;
+                
+                if (window.innerWidth <= 991) {
+                    const isAtBottom = Math.abs(
+                        sectionElement.scrollHeight - sectionElement.scrollTop - sectionElement.clientHeight
+                    ) <= 5;
+                    
+                    if (deltaY > 0 && !isAtBottom) return; // Don't navigate if not at bottom
+                    if (deltaY < 0 && sectionElement.scrollTop > 0) return; // Don't navigate if not at top
+                }
+            }
+            
+            handleNavigation(deltaY > 0 ? 1 : -1);
+        }
+        
+        isTouching = false;
     });
 
     // Add navigation dots
@@ -665,6 +765,27 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     }, { passive: true });
+
+    // Add this to your initialization code
+    document.addEventListener('DOMContentLoaded', () => {
+        // Initialize mobile scroll handling
+        if (window.innerWidth <= 991) {
+            const aboutSection = document.querySelector('#about');
+            if (aboutSection) {
+                aboutSection.addEventListener('scroll', () => {
+                    const totalHeight = aboutSection.scrollHeight;
+                    const viewportHeight = window.innerHeight;
+                    const scrollPosition = aboutSection.scrollTop;
+                    
+                    if (scrollPosition + viewportHeight >= totalHeight - 10) {
+                        aboutSection.classList.add('scrolled-complete');
+                    } else {
+                        aboutSection.classList.remove('scrolled-complete');
+                    }
+                });
+            }
+        }
+    });
 });
 
 // Add this function to initialize section handling
@@ -965,4 +1086,44 @@ class Chatbot {
 // Initialize chatbot when document is ready
 document.addEventListener('DOMContentLoaded', () => {
     new Chatbot();
+});
+
+// Add this function to initialize scroll handlers
+function initializeScrollHandlers() {
+    const aboutContent = document.querySelector('#about .about-content.scrollable-content');
+    const projectsContent = document.querySelector('#projects .section-content.scrollable-content');
+    
+    if (aboutContent) {
+        aboutContent.addEventListener('scroll', () => {
+            const isAtBottom = Math.abs(
+                aboutContent.scrollHeight - aboutContent.scrollTop - aboutContent.clientHeight
+            ) <= 5;
+            
+            if (isAtBottom) {
+                aboutContent.classList.add('scrolled-complete');
+            } else {
+                aboutContent.classList.remove('scrolled-complete');
+            }
+        });
+    }
+    
+    if (projectsContent) {
+        projectsContent.addEventListener('scroll', () => {
+            const isAtBottom = Math.abs(
+                projectsContent.scrollHeight - projectsContent.scrollTop - projectsContent.clientHeight
+            ) <= 5;
+            
+            if (isAtBottom) {
+                projectsContent.classList.add('scrolled-complete');
+            } else {
+                projectsContent.classList.remove('scrolled-complete');
+            }
+        });
+    }
+}
+
+// Initialize scroll handlers when document is ready
+document.addEventListener('DOMContentLoaded', () => {
+    initializeScrollHandlers();
+    // ... rest of your initialization code ...
 });
